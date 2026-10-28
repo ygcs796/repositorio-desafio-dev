@@ -117,7 +117,7 @@ export const updatePlanta = async(req = request, res = response) => {
         const planta = await PlantaRepository.findPlantaById(id)
 
         if (!planta){
-            return res.status(404).json({message: "Usuário não encontrado"})
+            return res.status(404).json({message: "Planta não encontrada"})
         }
 
         const { nome, especie, preco, 
@@ -134,7 +134,7 @@ export const updatePlanta = async(req = request, res = response) => {
             }
         } else if (preco != undefined){
             if (!Number.isInteger(preco) || preco <= 0){
-                return res.status(400).json({message: "O preço informado não está correto"})
+                return res.status(400).json({message: "O preço informado não é válido"})
             }
         } else if (estoque != undefined){
             if (!Number.isInteger(estoque) || estoque < 0){
@@ -186,12 +186,12 @@ export const deletePlanta = async(req = request, res = response) => {
         const planta = await PlantaRepository.findPlantaById(id)
 
         if (!planta){
-            return res.status(404).json({message: "Usuário não encontrado"})
+            return res.status(404).json({message: "Planta não encontrada"})
         }
 
         const deletedPlanta = await PlantaRepository.deletePlanta(id);
 
-        return res.status(204)
+        return res.status(204).json()
         
     } catch (error) {
         console.log(error);
