@@ -10,6 +10,7 @@ routes.get("/", (req, res) => {
 // CRUD de usuários
 routes.post("/plantas", PlantaController.createPlanta)
 routes.get("/plantas", PlantaController.findAllPlantas)
+routes.get("/plantas/esgotadas", PlantaController.PlantasEsgotadas)
 routes.get("/plantas/estoque/valor-total", PlantaController.valorTotalPlantas)
 routes.get("/plantas/:id", PlantaController.findPlantaById)
 routes.patch("/plantas/:id", PlantaController.updatePlanta)

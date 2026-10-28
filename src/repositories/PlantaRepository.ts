@@ -48,3 +48,9 @@ export const valorTotalPlantas = async() => {
         select: {preco: true, estoque: true}
     })
 }
+
+export const PlantasEsgotadas = async() => {
+    return await prisma.planta.findMany({
+        where: {estoque: 0}
+    })
+}

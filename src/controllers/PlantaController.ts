@@ -259,3 +259,14 @@ export const valorTotalPlantas = async(req = request, res = response) => {
         return res.status(500).json({message: "Erro ao calcular o valor total"});
     }
 }
+
+export const PlantasEsgotadas = async(req = request, res = response) =>{
+    try {
+        const plantas = await PlantaRepository.PlantasEsgotadas()
+
+        return res.status(200).json(plantas)        
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: "Erro ao buscar plantas esgotadas"});
+    }
+}
