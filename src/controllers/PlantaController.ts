@@ -50,6 +50,7 @@ export const findAllPlantas = async(req = request, res = response) => {
     try {
         const luminosidadeStr = req.query.luminosidade as string | undefined;
         const petFriendlyStr = req.query.petFriendly as string | undefined;
+        const nomeStr = req.query.nome;
 
         let luminosidade: Luminosidade | undefined = undefined;
         if (luminosidadeStr !== undefined){
@@ -64,10 +65,19 @@ export const findAllPlantas = async(req = request, res = response) => {
                 return res.status(400).json({message: "petFriendly não é booleano"})
             }
         }
-
         const petFriendly = petFriendlyStr === undefined? undefined : petFriendlyStr === "true";
         
-        const plantas = await PlantaRepository.findAllPlantas(luminosidade, petFriendly);
+        let nome: string | undefined = undefined;
+        if (nomeStr !== undefined){
+            if (typeof nomeStr !== "string"){
+                return res.status(400).json({message: "Nome deve ser um texto"})
+            }
+            if (nomeStr.trim() !== ""){
+                nome = nomeStr.trim();
+            }
+        }
+
+        const plantas = await PlantaRepository.findAllPlantas(luminosidade, petFriendly, nome);
         return res.status(200).json(plantas);
         
     } catch (error) {

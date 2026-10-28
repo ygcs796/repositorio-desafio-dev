@@ -7,11 +7,12 @@ export const createPlanta = async (data: Prisma.PlantaCreateInput) => {
     });
 };
 
-export const findAllPlantas = async(luminosidade?: Luminosidade, petFriendly?:boolean) => {
+export const findAllPlantas = async(luminosidade?: Luminosidade, petFriendly?:boolean, nome?: string) => {
     return await prisma.planta.findMany({
         where: {
             luminosidade: luminosidade,
-            petFriendly: petFriendly
+            petFriendly: petFriendly,
+            nome: nome === undefined? undefined : {contains: nome, mode: "insensitive"}
         }
     });
 }
