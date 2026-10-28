@@ -4,12 +4,10 @@ import { Luminosidade } from "@prisma/client";
 
 export const createPlanta = async (req = request, res = response) => {
     try {
-        // leitura
         const { nome, especie, preco, 
             estoque, luminosidade, 
             petFriendly, regaACadaDias} = req.body;
 
-        // validação e regras
         if (nome === undefined || especie === undefined || preco === undefined || estoque === undefined || luminosidade === undefined || petFriendly === undefined || regaACadaDias === undefined){
             return res.status(400).json({message: "Todos os campos são obrigatórios"});
         } else if (preco <= 0 || regaACadaDias < 1){
@@ -107,7 +105,6 @@ export const findPlantaById = async(req = request, res = response) => {
 
 export const updatePlanta = async(req = request, res = response) => {
     try {
-        // leitura
         const id = Number(req.params.id);
         if (!(Number.isInteger(id)) || id <= 0) {
             if (!(Number.isInteger(id))){
@@ -127,7 +124,6 @@ export const updatePlanta = async(req = request, res = response) => {
             estoque, luminosidade, 
             petFriendly, regaACadaDias} = req.body;
 
-        // validação e regras
         if (nome != undefined){
             if (typeof nome != "string" || nome.trim() === ""){
                 return res.status(400).json({message: "Nome não é string ou está vazio"})
