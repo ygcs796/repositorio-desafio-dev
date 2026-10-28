@@ -51,6 +51,7 @@ export const findAllPlantas = async(req = request, res = response) => {
         const luminosidadeStr = req.query.luminosidade as string | undefined;
         const petFriendlyStr = req.query.petFriendly as string | undefined;
         const nomeStr = req.query.nome;
+        const ordemStr = req.query.ordem;
 
         let luminosidade: Luminosidade | undefined = undefined;
         if (luminosidadeStr !== undefined){
@@ -77,7 +78,15 @@ export const findAllPlantas = async(req = request, res = response) => {
             }
         }
 
-        const plantas = await PlantaRepository.findAllPlantas(luminosidade, petFriendly, nome);
+        let ordem: "preco" | "nome" | undefined = undefined
+        if (ordemStr !== undefined){
+            if (ordemStr !== "preco" && ordemStr !== "nome"){
+                return res.status(400).json({message: "ordem deve ser 'preco' ou 'nome'"})
+            }
+            ordem = ordemStr;
+        }
+
+        const plantas = await PlantaRepository.findAllPlantas(luminosidade, petFriendly, nome, ordem);
         return res.status(200).json(plantas);
         
     } catch (error) {
